@@ -1,7 +1,7 @@
 # mvstpp
 Mark variograms for spatio-temporal point processes
 
-# Installation guide
+## Installation guide
 
 The easiest way to install the development version of mvstpp from github is using the devtools package which can be installed run the next command:
 
@@ -13,7 +13,7 @@ require(devtools)
 
 install_github('frajaroco/mvstpp')
 
-# CiteBibtex
+## CiteBibtex
 ```
 @misc{r15,
 	author = {Francisco J. Rodr\'{i}guez-Cort\'{e}s},
