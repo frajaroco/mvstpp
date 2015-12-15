@@ -1,6 +1,4 @@
-# mvstpp
-
-## Mark variograms for spatio-temporal point processes
+# mvstpp: Mark variograms for spatio-temporal point processes 
 
 Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through the mark variograms.
 
