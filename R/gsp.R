@@ -64,7 +64,7 @@ gsp <- function(xyt, ds, ks="epanech", hs){
   ptst <- xytimes
   npt <- length(ptsx)
   nds <- length(ds)
-  gsp <- rep(0,nds)
+  gsps <- rep(0,nds)
 
   kernel <- c(ks=ks,hs=hs)
 
@@ -72,11 +72,18 @@ gsp <- function(xyt, ds, ks="epanech", hs){
   else if (ks=="epanech") {ks=2}
   else if (ks=="biweight") {ks=3}
 
-  storage.mode(gsp) <- "double"
+  storage.mode(gsps) <- "double"
 
-  gspout <- .Fortran("gspcore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),as.double(ds),as.integer(nds),as.integer(ks),as.double(hs),(gsp))
+  gspout <- .Fortran("gspcore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),as.double(ds),as.integer(nds),as.integer(ks),as.double(hs),(gsps))
 
-  gsp <- gspout[[9]]
-
-invisible(return(list(gspke=gsp,ds=ds,kernel=kernel)))
+  gsps <- gspout[[9]]
+  
+  dsf <- rep(0,nds+1)
+  dsf[2:(nds+1)] <- ds[1:nds]
+  
+  gsp <- rep(0,nds+1)
+  gsp[2] <- gsps[2]
+  gsp[3:(nds+1)] <- gsps[2:nds]
+  
+invisible(return(list(gspke=gsp,ds=dsf,kernel=kernel)))
 }

@@ -55,7 +55,7 @@ gte <- function(xyt, dt, kt="epanech", ht){
   ptst <- xytimes
   nt <- length(ptst)
   ndt <- length(dt)
-  gte <- rep(0,ndt)
+  gtet <- rep(0,ndt)
 
   kernel=c(kt=kt,ht=ht)
 
@@ -63,11 +63,18 @@ gte <- function(xyt, dt, kt="epanech", ht){
   else if (kt=="epanech"){ kt=2}
   else if (kt=="biweight"){ kt=3}
 
-  storage.mode(gte) <- "double"
+  storage.mode(gtet) <- "double"
 
-  gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(nt),as.double(dt),as.integer(ndt),as.integer(kt),as.double(ht),(gte))
+  gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(nt),as.double(dt),as.integer(ndt),as.integer(kt),as.double(ht),(gtet))
 
-  gte <- gteout[[9]]
+  gtet <- gteout[[9]]
 
-  invisible(return(list(gteke=gte,dt=dt,kernel=kernel)))
+  dtf <- rep(0,ndt+1)
+  dtf[2:(ndt+1)] <- dt[1:ndt]
+  
+  gte <- rep(0,ndt+1)
+  gte[2] <- gtet[2]
+  gte[3:(ndt+1)] <- gtet[2:ndt]
+  
+  invisible(return(list(gteke=gte,dt=dtf,kernel=kernel)))
 }
