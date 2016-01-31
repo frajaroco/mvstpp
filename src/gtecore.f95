@@ -10,7 +10,7 @@
        implicit real*8(a-h,o-z)
 
        integer i,j,iv,n,nt,kt
-       double precision wij,vij,ht,kerns,gtem,gten,gte,x,y,txy
+       double precision wij,vij,ht,kernt,gtem,gten,gte,x,y,txy
        double precision hij,tij,xi,yi,ti,pi,two
        dimension x(n),y(n),txy(n),t(nt),gte(nt),gtem(nt),gten(nt)
        
@@ -30,15 +30,15 @@
             hij=sqrt(((xi-x(j))**two)+((yi-y(j))**two))
             tij=abs(ti-txy(j))
               if (kt.eq.1) then
-               kerns=boxkernel((t(iv)-tij)/ht,ht)
+               kernt=boxkernel((t(iv)-tij)/ht,ht)
                 else if (kt.eq.2) then
-                 kerns=ekernel((t(iv)-tij)/ht,ht)
+                 kernt=ekernel((t(iv)-tij)/ht,ht)
                   else if (kt.eq.3) then
-                   kerns=qkernel((t(iv)-tij)/ht,ht)
+                   kernt=qkernel((t(iv)-tij)/ht,ht)
               end if
-             if ((kerns.ne.0d0).and.(t(iv).ne.0d0)) then
-                    wij=(((hij**two)/two)*kerns)
-                    vij=kerns
+             if ((kernt.ne.0d0).and.(t(iv).ne.0d0)) then
+                    wij=(((hij**two)/two)*kernt)
+                    vij=kernt
                     gtem(iv)=gtem(iv)+wij
                     gten(iv)=gten(iv)+vij                    
              end if      
