@@ -18,7 +18,6 @@
        gspn=0d0
 
           two=2d0
-          pi=3.141592654d0
 
        do iu=1,ns
         do i=1,n
