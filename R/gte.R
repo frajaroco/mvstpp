@@ -28,10 +28,10 @@
 #'
 #' # R plot - Temporal mark variogram
 #' par(mfrow=c(1,1))
-#' gte_range <- range(out$gteke,1/3)
+#' gte_range <- range(out$gteke,1/6)
 #' plot(out$dt,out$gteke,type="l",ylim=gte_range,xlab="t = times",
 #' ylab=expression(hat(gamma)[te](t)),main="Temporal mark variogram")
-#' lines(out$dt,rep(1/3,length(out$dt)),type="l",col="red")
+#' lines(out$dt,rep(1/6,length(out$dt)),type="l",col="red")
 #'
 #' ## End(Not run)
 gte <- function(xyt, dt, kt="epanech", ht){
