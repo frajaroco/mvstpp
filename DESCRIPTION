@@ -4,7 +4,7 @@ Title: Mark variogram for spatio-temporal point processes
 Version: 0.1.1
 Nickname: Coffee Aroma
 Date: 2015-11-19
-Author: Francisco J. Rodriguez-Cortes, Dietrich Stoyan, Jorge Mateu, Jonatan A. Gonzalez
+Author: Francisco J. Rodriguez-Cortes
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
     R (>= 3.2.2),
