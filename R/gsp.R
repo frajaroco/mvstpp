@@ -85,5 +85,4 @@ gsp <- function(xyt, ds, ks="epanech", hs){
   gsp[2] <- gsps[2]
   gsp[3:(nds+1)] <- gsps[2:nds]
   
-invisible(return(list(gspke=gsp,ds=dsf,kernel=kernel)))
-}
+invisible(return(list(gspke=gsp,ds=dsf,kernel=kernel)))}
