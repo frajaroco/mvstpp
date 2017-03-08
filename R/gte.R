@@ -1,80 +1,155 @@
-#' @title Temporal mark variogram function
-#' @description Computes an estimator of the temporal mark variogram function.
-#' @param xyt Spatial coordinates and times \eqn{(x,y,t)} of the point pattern.
-#' @param dt A vector of times \code{v} at which \eqn{\gamma_{te}(v)} is computed.
-#' @param kt A kernel function for the temporal distances. The default is the \code{"box"} kernel. It can also be \code{"epanech"} for the Epanechnikov kernel, or \code{"biweight"}.
-#' @param ht A bandwidth of the kernel function \code{kt}.
-#' @details \eqn{N = {[x_{1},t_{1}],[x_{2},t_{2}],...,[x_{n},t_{n}]}} with \eqn{x_{i}} in \eqn{W} subset of \eqn{R^2} and \eqn{t_{i}} in \eqn{T} subset of \eqn{R}, the temporal mark variogram \eqn{\gamma_{te}(t)} is based on the stationary one-dimensional point process of the times \eqn{t_{i}}. This approach makes sense if the \eqn{x_{i}} come from a bounded spatial window \eqn{W}. The function \eqn{\gamma_{te}(t)} is given by the mean of the half-squared distances of the locations of points of time lag \eqn{t}, and the estimator is given by \deqn{\widehat{\gamma}_{te}(t) = sum_{i = 1,...,n} sum_{j = 1,...,n; j != i} (1/2 (||x_{1}-x_{2}||)^2 \kappa_{\delta}(|t_{i}-t_{j}|-t) / sum_{i = 1,...,n} sum_{j = 1,...,n; j != i} (\kappa_{\delta} (|t_{i}-t_{j}|-t) ),} where \eqn{\kappa} is a one-dimensional kernel function with bandwidth \eqn{\delta}.
-#' @return A list containing:
-#' \itemize{
-#'   \item \code{gteke}: A vector containing the values of \eqn{\widehat{\gamma}_{te}(t)} estimated.
-#'   \item \code{dt}: If \code{dt} is missing, a vector of distances \code{v} at which \eqn{\gamma_{te}(t)} is computed under the restriction \eqn{0<\delta<t}.
-#'   \item \code{kernel}: A vector of names and bandwidth of the temporal kernel.
-#'   }
-#' @author Francisco J. Rodriguez-Cortes <cortesf@@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
-#' @references Baddeley, A. and Turner, J. (2005). \code{spatstat}: An R Package for Analyzing Spatial Point Pattens. Journal of Statistical Software 12, 1-42.
-#' @references Chiu, S. N., Stoyan, D., Kendall, W. S., and Mecke, J. (2013). Stochastic Geometry and its Applications. John Wiley & Sons.
-#' @references Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for plotting, simulating and analyzing Spatio-Temporal Point Patterns. Journal of Statistical Software 53, 1-29.
-#' @references Illian, J B., Penttinen, A., Stoyan, H. and Stoyan, D. (2008). Statistical Analysis and Modelling of Spatial Point Patterns. John Wiley and Sons, London.
-#' @examples
-#' ## Not run:
-#' #################
-#'
-#' # Realisations of the homogeneous Poisson processes
-#' hpp <- rpp(lambda = 100, replace = FALSE)$xyt
-#'
-#' # This function provides an edge-corrected kernel estimator of the temporal mark variogram
-#' out <- gte(hpp,ht=0.1/sqrt(100))
-#'
-#' # R plot - Temporal mark variogram
-#' par(mfrow=c(1,1))
-#' gte_range <- range(out$gteke,1/6)
-#' plot(out$dt,out$gteke,type="l",ylim=gte_range,xlab="t = times",
-#' ylab=expression(hat(gamma)[te](t)),main="Temporal mark variogram")
-#' lines(out$dt,rep(1/6,length(out$dt)),type="l",col="red")
-#'
-#' ## End(Not run)
-gte <- function(xyt, dt, kt="epanech", ht){
-
+gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",approach="simplified"){
+  
+  correc <- c("none","isotropic","border","modified.border","translate","setcovf")
+  id <- match(correction,correc,nomatch=NA)
+  if (any(nbg <- is.na(id))){
+    messnbg <- paste("unrecognised correction method:",paste(dQuote(correction[nbg]),collapse=","))
+    stop(messnbg,call.=FALSE)
+  }
+  id <- unique(id)	
+  correc2 <- rep(0,6)
+  correc2[id] <- 1	
+  
+  appro <- c("simplified","standardised")
+  im <- match(approach,appro,nomatch=NA)
+  if (any(nbm <- is.na(im))){
+    messnbm <- paste("unrecognised type of estimator:",paste(dQuote(approach[nbm]),collapse=","))
+    stop(messnbm,call.=FALSE)
+  }
+  im <- unique(im)
+  appro2 <- rep(0,2)
+  appro2[im] <- 1
+  
+  ker <- c("box","epanech","biweight")
+  ik <- match(kt,ker,nomatch=NA)
+  if (any(nbk <- is.na(ik))){
+    messnbk <- paste("unrecognised kernel function:",paste(dQuote(kt[nbk]),collapse=","))
+    stop(messnbk,call.=FALSE)
+  }
+  ik <- unique(ik)
+  ker2 <- rep(0,3)
+  ker2[ik] <- 1
+  
+  dup <- duplicated(data.frame(xyt[,1],xyt[,2],xyt[,3]),fromLast = TRUE)[1]
+  if (dup == TRUE){
+    messnbd <- paste("spatio-temporal data contain duplicated points")
+    warning(messnbd,call.=FALSE)
+  }
+  
   if (missing(ht)){
     d <- dist(xyt[,3])
-    ht <- dpik(d, kernel=kt, range.x=c(min(d),max(d)))}
-
-  if (missing(dt)){
-    tregion <- range(xyt[,3],na.rm=TRUE)
-    bsupt <- max(tregion)
-    binft <- min(tregion)
+    ht <- dpik(d,kernel=kt,range.x=c(min(d),max(d)))
+  }
+  
+  if (missing(t.region)){
+    tr <- range(xyt[,3],na.rm=TRUE)
+    tw <- diff(tr)
+    t.region <- c(tr[1]-0.01*tw,tr[2]+0.01*tw)
+  }
+  
+  bsupt <- max(t.region)
+  binft <- min(t.region)
+  
+  if (missing(dt)) {
     maxt <- (bsupt-binft)/4
-    dt <- seq(0, maxt, len=50)
-    dt <- sort(dt)}
-
+    dt <- seq(ht,maxt,len=100)[-1]
+  }
+  if(dt[1]==0){
+    dt <- dt[-1]
+  }
+  
+  kernel <- c(kt=kt,ht=ht)
+  
   pts <- xyt[,1:2]
   xytimes <- xyt[,3]
   ptsx <- pts[,1]
   ptsy <- pts[,2]
   ptst <- xytimes
-  nt <- length(ptst)
+  npt <- length(ptsx)
   ndt <- length(dt)
   gtet <- rep(0,ndt)
-
-  kernel=c(kt=kt,ht=ht)
-
-  if (kt=="box"){ kt=1}
-  else if (kt=="epanech"){ kt=2}
-  else if (kt=="biweight"){ kt=3}
-
+  
   storage.mode(gtet) <- "double"
-
-  gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(nt),as.double(dt),as.integer(ndt),as.integer(kt),as.double(ht),(gtet))
-
-  gtet <- gteout[[9]]
-
-  dtf <- rep(0,ndt+1)
-  dtf[2:(ndt+1)] <- dt[1:ndt]
   
-  gte <- rep(0,ndt+1)
-  gte[2] <- gtet[2]
-  gte[3:(ndt+1)] <- gtet[2:ndt]
-  
-  invisible(return(list(gteke=gte,dt=dtf,kernel=kernel)))
+  if (appro2[1]==1){
+    gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),as.double(dt),
+                        as.integer(ndt),as.integer(ker2),as.double(ht),(gtet),PACKAGE="msfstpp")
+    gtet <- gteout[[9]]
+    
+    dtf <- rep(0,ndt+2)
+    dtf[3:(ndt+2)] <- dt
+    dt <- dtf 
+    
+    egte <- rep(0,ndt+2)
+    egte[2] <- gtet[1]
+    egte[3:(ndt+2)] <- gtet
+    
+    invisible(return(list(egte=egte,dt=dt,kernel=kernel,t.region=t.region)))
+  } else {
+    
+    if(missing(t.lambda)){
+      misl <- 1
+      t.lambda <- rep(npt/(bsupt-binft),npt)
+    } else {
+      misl <- 0
+      if (length(t.lambda)==1){
+        t.lambda <- rep(t.lambda,npt)
+      }
+    }
+    
+    wrt <- array(0,dim=c(npt,npt))
+    wtt <- array(0,dim=c(npt,npt))
+    wbit <- array(0,dim=c(npt,ndt))
+    wbimodt <- array(0,dim=c(npt,ndt))
+    wst <- rep(0,ndt)
+    
+    # correction="isotropic"
+    
+    if(correction=="isotropic"){
+      wist <- tedgeRipley(ptst,binft,bsupt)
+      wrt <- 1/wist
+    }
+    
+    # correction="translate"
+    if(correction=="translate"){
+      wtrat <- tedgeTrans(ptst,t.region)
+      wtt <- 1/wtrat
+    }
+    
+    #  correction=="border" or "modified border"
+    
+    if(any(correction=="border")|any(correction=="modified.border")){
+      bj = .bdist.times(xytimes, t.region)
+      for(j in 1:ndt) { 
+        wbit[,j] <- (bj>dt[j])/sum((bj>dt[j])/t.lambda)
+        wbimodt[,j] <- (bj>dt[j])/.eroded.areat(t.region,dt[j])
+      }
+      wbit[is.na(wbit)] <- 0
+    }
+    
+    # correction="setcovf"
+    
+    if(correction=="setcovf"){
+      wsett <- tsetcovf(dt,ndt,bsupt-binft)
+      wst <- 1/wsett
+    }
+    
+    gteout <- .Fortran("gtecoreinh",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),
+                        as.double(dt),as.integer(ndt),as.double(t.lambda),as.integer(ker2),
+                        as.double(ht),as.double(wrt),as.double(wtt),as.double(wbit),
+                        as.double(wbimodt),as.double(wst),as.integer(correc2),(gtet),
+                        PACKAGE="msfstpp")
+    
+    gtet <- gteout[[16]]
+    
+    dtf <- rep(0,ndt+2)
+    dtf[3:(ndt+2)] <- dt
+    dt <- dtf 
+    
+    egte <- rep(0,ndt+2)
+    egte[2] <- gtet[1]
+    egte[3:(ndt+2)] <- gtet
+    
+    invisible(return(list(egte=egte,dt=dt,kernel=kernel,t.region=t.region,t.lambda=t.lambda)))
+  }
 }
