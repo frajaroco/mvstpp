@@ -73,7 +73,7 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
   
   if (appro2[1]==1){
     gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),as.double(dt),
-                        as.integer(ndt),as.integer(ker2),as.double(ht),(gtet),PACKAGE="msfstpp")
+                        as.integer(ndt),as.integer(ker2),as.double(ht),(gtet),PACKAGE="mvstpp")
     gtet <- gteout[[9]]
     
     dtf <- rep(0,ndt+2)
@@ -138,7 +138,7 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
                         as.double(dt),as.integer(ndt),as.double(t.lambda),as.integer(ker2),
                         as.double(ht),as.double(wrt),as.double(wtt),as.double(wbit),
                         as.double(wbimodt),as.double(wst),as.integer(correc2),(gtet),
-                        PACKAGE="msfstpp")
+                        PACKAGE="mvstpp")
     
     gtet <- gteout[[16]]
     
@@ -152,4 +152,74 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
     
     invisible(return(list(egte=egte,dt=dt,kernel=kernel,t.region=t.region,t.lambda=t.lambda)))
   }
+}
+
+tedgeRipley <- function(times,binft,bsupt){
+  ntimes <- length(times)
+  wrt <- matrix(1,ncol=ntimes,nrow=ntimes)
+  
+  for(i in 1:ntimes){
+    ti <- times[i]
+    for(j in 1:ntimes){
+      tij <- abs(ti-times[j])
+      if (i!=j){
+        bsup <- ti+tij
+        binf <- ti-tij
+        if ((bsup<=bsupt)&(binf>=binft)){
+          wrt[i,j] <- 1}
+        else {
+          wrt[i,j] <- 2
+        }
+      }
+    }
+  }
+  invisible(return(wrt))
+}
+
+tedgeTrans <- function(times,t.region){
+  if (missing(t.region)){
+    t.region <- range(times)
+  }
+  
+  ntimes <- length(times)
+  a <- diff(range(t.region))
+  wtt <- matrix(a,ncol=ntimes,nrow=ntimes)
+  
+  for(i in 1:ntimes){
+    for(j in 1:ntimes){
+      if (i!=j){
+        b <- a-abs(times[i]-times[j])
+        wtt[i,j] <- a/b
+      }
+    }
+  }
+  invisible(return(wtt))
+}
+
+tsetcovf <- function(times,ntimes,longit){
+  wst <- rep(0,ntimes)
+  for (i in 1:ntimes){
+    wst[i] <- longit-times[i]}
+  invisible(return(wst=wst))
+}
+
+.bdist.times=function(times,t.region){
+  if (missing(t.region)){
+    t.region <- range(times)
+  }
+  ntimes <- length(times)
+  a <- min(t.region)
+  b <- max(t.region)
+  
+  bj <- NULL
+  for(j in 1:ntimes)
+    bj <- c(bj,min(c(abs(times[j]-a),abs(times[j]-b))))
+  
+  invisible(return(bj))
+}
+
+.eroded.areat=function(t.region,dist){
+  a <- diff(range(t.region))
+  b <- a-dist
+  invisible(return(b))
 }

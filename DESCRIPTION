@@ -1,9 +1,9 @@
 Package: mvstpp
 Type: Package
 Title: Mark variogram for spatio-temporal point processes
-Version: 0.1.1
+Version: 0.1.2
 Nickname: Coffee Aroma
-Date: 2015-11-19
+Date: 2017-03-09
 Author: Francisco J. Rodriguez-Cortes
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
@@ -12,9 +12,8 @@ Depends:
     KernSmooth,
     spatstat,
     stpp
-Description: Basic toolkit for the exploration and analysis of the spatio-
-    temporal point patterns through the mark variograms.
+Description: Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through the mark variograms.
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

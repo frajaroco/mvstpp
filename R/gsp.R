@@ -84,7 +84,7 @@ gsp <- function(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",appro
   if (appro2[1]==1){
     gspout <- .Fortran("gspcore",as.double(ptsx),as.double(ptsy),as.double(ptst),
                        as.integer(npt),as.double(ds),as.integer(nds),as.integer(ker2),
-                       as.double(hs),(gsps),PACKAGE="msfstpp")
+                       as.double(hs),(gsps),PACKAGE="mvstpp")
     
     gsps <- gspout[[9]]
     
@@ -158,7 +158,7 @@ gsp <- function(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",appro
                         as.integer(npt),as.double(ds),as.integer(nds),as.double(s.lambda),
                         as.integer(ker2),as.double(hs),as.double(wrs),as.double(wts),
                         as.double(wbi),as.double(wbimod),as.double(wss),as.integer(correc2),
-                        (gsps),PACKAGE="msfstpp")
+                        (gsps),PACKAGE="mvstpp")
     gsps <- gspout[[16]]
     
     dsf <- rep(0,nds+2)

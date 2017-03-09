@@ -5,3 +5,5 @@ import(splancs)
 import(spatstat)
 import(KernSmooth)
 import(stpp)
+
+importFrom("stats", "dist", "rpois", "runif")
