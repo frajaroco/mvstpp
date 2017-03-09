@@ -20,10 +20,10 @@ install_github('frajaroco/mvstpp')
 
 ## CiteBibtex
 ```
-@misc{r16,
+@misc{r15,
 	author = {Francisco J. Rodr\'{i}guez-Cort\'{e}s},
 	title = {mvstpp: {Mark} {V}ariogram for {S}patio-{T}emporal {P}oint {P}rocesses},
-	year = {2016},
+	year = {2015},
 	note = {GitHub repository},
 	url = {\url{https://github.com/frajaroco/mvstpp}}
 }
