@@ -12,7 +12,7 @@ Depends:
     KernSmooth,
     spatstat,
     stpp
-Description: Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through the mark variograms.
+Description: Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through the spatial and temporal mark variograms.
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes
