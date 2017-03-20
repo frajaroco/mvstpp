@@ -15,8 +15,8 @@ install_github('frajaroco/mvstpp')
 ```
 
 ## References
-- [Stoyan, D., Rodríguez-Cortés, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. *Spatial Statistics*. DOI: http://dx.doi.org/10.1016/j.spasta.2017.02.006.](http://www.sciencedirect.com/science/article/pii/S2211675317300696)
-- [González, J. A., Rodríguez-Cortés, F. J., Cronie, O. and Mateu, J. (2016). Spatio-temporal point process statistics: a review. *Spatial Statiscts*, **18**:505-544.](http://www.sciencedirect.com/science/article/pii/S2211675316301130)
+- [Stoyan, D., Rodríguez-Cortés, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. *Spatial Statistics*. **20**:125-147.](http://www.sciencedirect.com/science/article/pii/S2211675317300696)
+- [González, J. A., Rodríguez-Cortés, F. J., Cronie, O. and Mateu, J. (2016). Spatio-temporal point process statistics: a review. *Spatial Statiscts*. **18**:505-544.](http://www.sciencedirect.com/science/article/pii/S2211675316301130)
 
 ## CiteBibtex
 ```
