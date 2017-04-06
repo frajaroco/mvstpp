@@ -27,7 +27,6 @@ install_github('frajaroco/mvstpp')
 	note = {GitHub repository},
 	url = {\url{https://github.com/frajaroco/mvstpp}}
 }
-
 ```
 
 # mvstpp: Mark variograms for spatio-temporal point processes 
@@ -59,5 +58,4 @@ install_github('frajaroco/mvstpp')
 	note = {GitHub repository},
 	url = {\url{https://github.com/frajaroco/mvstpp}}
 }
-
 ```
