@@ -1,58 +1,30 @@
 FMvariogram <- function(u,gmv){
 
-xyt <- rpp(100)
+xyt <- rpp(100)$xyt
 n <- length(u)
+mx <- u[n]
 
 # Construction of the geodata object for geoR
 gd <- list(coords=xyt[,1:2], data=xyt[,3])
 oldClass(gd) <- "geodata"
   
 # Empirical variograms geoR
-sv <- variog(gd, uvec=u[-1], max.dist=u[n])
-sv
-plot(sv)
+sv <- variog(gd, uvec=u[-1], max.dist=mx)
 
 # Empirical variograms mvstpp
 sv$u <- u[-1]
 sv$v <- gmv[-c(1,2)]
-sv
-plot(sv)
 
 nugg.ef <- sv$v[1]
 sill <- sv$v[which.max(sv$v)]
 rang <- sv$u[which.max(sv$v)]
-
-# Model parameters estimated "by eye"
-
-# Gaussian cov.model 
-lines.variomodel(cov.model = "gau", cov.pars = c(sil,rang), nug = nugg.ef, max.dist = rsup, col="blue")
+Parameters <- c(nugg.e=nugg.ef,sill=sill,rang=rang)
 
 # Model parameters estimated "by least squares fit of empirical variograms"
-rsoutG <- variofit(sv, ini=c(sil,rang), nugget=nugg.ef, cov.model="gau", wei="equal")
-rsoutG
-lines(rsoutG, col="red")
+fit <- variofit(sv,ini.cov.pars=c(sill,rang), nugget=nugg.ef, cov.model="gau", weights="equal")
+gv <- v.g(dst=u,nugg.ef=summary(fit)[[5]][[1]],sill=summary(fit)[[3]][[1]],rang=summary(fit)[[3]][[2]])
 
-c1 <- v.g(dst=u,nugg.ef=summary(rsoutG)[[5]][[1]],sill=summary(rsoutG)[[3]][[1]],rang=summary(rsoutG)[[3]][[2]])
-lines(c1$dst,c1$gvm,type="l",col="green")
-
-# Plot Spatial mark variogram
-
-domsNe1 <- rep(0,lgrid+1)
-domsNe1[2:(lgrid+1)] <- u[1:length(u)]
-
-rasNe1 <- rep(0,lgrid+1)
-rasNe1[2] <- gsp1[2]
-rasNe1[3:(lgrid+1)] <- gsp1[2:lgrid]
-
-# spatial component fitted variogram
-domsNf1 <- rep(0,lgrid+1)
-domsNf1[2:(lgrid+1)]<- c1$dst[1:length(c1$dst)]
-
-rasNf1 <- rep(0,lgrid+1)
-rasNf1[2] <- c1$gvm[2]
-rasNf1[3:(lgrid+1)]<- c1$gvm[2:length(c1$gvm)]
-
-return()
+invisible(return(list(u=u,gmv=gmv,gv=gv$gvm,Parameters=Parameters)))
 }
 
 # The Gaussian variogram model

@@ -3,15 +3,16 @@ Type: Package
 Title: Mark variogram for spatio-temporal point processes
 Version: 0.1.3
 Nickname: Coffee Aroma
-Date: 2017-03-09
+Date: 2017-04-11
 Author: Francisco J. Rodriguez-Cortes
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
     R (>= 3.2.2),
-    splancs,
-    KernSmooth,
     spatstat,
-    stpp
+    splancs,
+    stpp,
+    geoR,
+    KernSmooth,
 Description: Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through spatial and temporal mark variograms.
 License: GPL-3
 LazyLoad: yes
