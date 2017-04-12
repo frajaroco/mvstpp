@@ -1,7 +1,7 @@
 \name{FMvariogram}
 \alias{FMvariogram}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Fit spatial and temporal mark variogram functions
+\title{Fit Gaussian geostatistical variogram to spatial and temporal mark variogram functions 
 %%  ~~function to do ... ~~
 }
 \description{Fit Gaussian geostatistical variogram to the obtained spatial and temporal mark variograms
