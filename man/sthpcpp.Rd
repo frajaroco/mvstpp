@@ -1,7 +1,7 @@
 \name{sthpcpp}
 \alias{sthpcpp}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Spatio-temporal hot-spots cluster point process model
+\title{Spatio-temporal hot-spots cluster model
 %%  ~~function to do ... ~~
 }
 \description{Generate a random spatio-temporal point pattern, a simulated realisation of the cluster process.

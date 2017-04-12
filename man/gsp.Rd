@@ -26,7 +26,7 @@ gsp(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",approach="simplif
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-\item{egsp}{ A vector containing the values of \eqn{\gamma_{sp}(r)} estimated}
+\item{egsp}{ A vector containing the values of \eqn{\gamma_{sp}(r)} estimated.}
 \item{ds}{If \code{ds} is missing, a vector of distances \code{u} at which \code{gsp(u)} is computed from 0 to until quarter of the maximum distance between the points in the pattern.}
 \item{kernel}{A vector of names and bandwidth of the spatial kernel.}
 \item{s.region}{If \code{s.region} is missing, the Ripley-Rasson estimate of the spatial domain is considered under the parameter \code{approach="standardised"}. The bounding box of \code{xyt[,1:2]} is considered under the parameter \code{approach="simplified"}.}

@@ -20,8 +20,12 @@ sill <- sv$v[which.max(sv$v)]
 rang <- sv$u[which.max(sv$v)]
 Parameters <- c(nugg.e=nugg.ef,sill=sill,rang=rang)
 
+options(warn = -1)
 # Model parameters estimated "by least squares fit of empirical variograms"
 fit <- variofit(sv,ini.cov.pars=c(sill,rang), nugget=nugg.ef, cov.model="gau", weights="equal")
+
+options(warn = 0)
+
 gv <- v.g(dst=u,nugg.ef=summary(fit)[[5]][[1]],sill=summary(fit)[[3]][[1]],rang=summary(fit)[[3]][[2]])
 
 invisible(return(list(u=u,gmv=gmv,gv=gv$gvm,Parameters=Parameters)))

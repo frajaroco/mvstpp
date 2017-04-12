@@ -1,7 +1,7 @@
 \name{stdcpp}
 \alias{stdcpp}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Spatio-temporal double-cluster point process model
+\title{Spatio-temporal double-cluster model
 %%  ~~function to do ... ~~
 }
 \description{Generate a random spatio-temporal point pattern, a simulated realisation of the cluster process.
