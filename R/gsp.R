@@ -42,18 +42,8 @@ gsp <- function(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",appro
   }
   
   if (missing(s.region)){
-    if (appro2[1]==1){
       s.region <- sbox(xyt[, 1:2], xfrac = 0.01, yfrac = 0.01)
-    } else{
-      x <- xyt[,1]
-      y <- xyt[,2]
-      W <- ripras(x,y)
-      poly <- W$bdry
-      X <- poly[[1]]$x
-      Y <- poly[[1]]$y
-      s.region <- cbind(X,Y)
     }
-  }
   
   bsw <- owin(poly=list(x=s.region[,1],y=s.region[,2]))
   
