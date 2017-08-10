@@ -62,7 +62,6 @@ gsp <- function(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",appro
   
   ok <- inside.owin(xyt[,1],xyt[,2],w=bsw)
   xyt.inside <- data.frame(x=xyt[,1][ok],y=xyt[,2][ok],t=xyt[,3][ok])
-  xyt.inside <- as.3dpoints(xyt.inside)
 
   ptsx <- xyt.inside[,1]
   ptsy <- xyt.inside[,2]
