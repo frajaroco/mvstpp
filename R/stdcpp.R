@@ -1,16 +1,32 @@
 stdcpp <- function(lambp, a, b, c, mu, s.region, t.region){
 
-  if (missing(s.region)) {s.region <- matrix(c(1,1,0,0,0,1,1,0),ncol=2)}
-  if (missing(t.region)) {t.region <- c(0,1)}
+  if (missing(s.region)) s.region <- matrix(c(1,1,0,0,0,1,1,0),ncol=2)
+      
+      xp <- s.region[,1]
+      yp <- s.region[,2]
+      nedges <- length(xp)
+      yp <- yp - min(yp) 
+      nxt <- c(2:nedges, 1)
+      dx <- xp[nxt] - xp
+      ym <- (yp + yp[nxt])/2
+      Areaxy <- -sum(dx * ym)
+      
+      if (Areaxy > 0){
+        bsw <- owin(poly = list(x = s.region[,1], y = s.region[,2]))
+      }else{
+        bsw <- owin(poly = list(x = s.region[,1][length(s.region[,1]):1], y = s.region[,2][length(s.region[,1]):1]))
+      }
+      
+  if (missing(t.region)) t.region <- c(0,1)
 
   stmc <- NULL
-  stPoip <- rpp(lambp, s.region=s.region,t.region=t.region)$xyt
+  stPoip <- rpp(lambda=lambp,s.region,t.region)$xyt
   for(i in 1:length(stPoip[,1])){
   PS <- PoiSph(a,b,c,mu=mu,centre=stPoip[i,])
   stmc <- rbind(stmc,PS)}
 
-  ins <- inpip(stmc[,1:2],s.region)
-  insw <- stmc[ins,]
+  ok <- inside.owin(stmc[,1],stmc[,2],w=bsw)
+  insw <- data.frame(x=stmc[,1][ok],y=stmc[,2][ok],t=stmc[,3][ok])
   stc3 <- intim(insw,t.region)
   stc3 <- as.3dpoints(stc3)
 
@@ -57,7 +73,10 @@ intim <- function(xyt,t.region){
   int <- NULL
   for(i in 1:length(xyt[,1])){
     if (xyt[i,3] > t.region[1] & xyt[i,3] < t.region[2]){
-      int <- rbind(int,xyt[i,])}}
+      int <- rbind(int,xyt[i,])}
+   }
+  
+  int <- as.3dpoints(int)
 
   invisible(return(int))
 }

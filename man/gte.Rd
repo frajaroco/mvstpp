@@ -14,7 +14,7 @@ gte(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",approach="simplif
 \arguments{
   \item{xyt}{Spatial coordinates and times \eqn{(x,y,t)} of the point pattern.}
   \item{t.region}{Vector containing the minimum and maximum values of the time interval.}
-  \item{t.lambda}{Vector of values of the temporal intensity function evaluated at the points \eqn{t} in \eqn{T}.}
+  \item{t.lambda}{Vector of values of the temporal intensity function evaluated at the points \eqn{t} in \eqn{T}. If \code{t.lambda} is missing, the estimate of the temporal mark correlation function is computed as for the homogeneous case, i.e. considering \eqn{n/|T|} as an estimate of the temporal intensity under the parameter \code{approach="standardised"}.}
   \item{dt}{A vector of times \code{v} at which \code{gte(v)} is computed.}
   \item{kt}{A kernel function for the temporal distances. The default is the \code{"epanech"} kernel. It can also be \code{"box"} for the uniform kernel, or \code{"biweight"}.}
   \item{ht}{A bandwidth of the kernel function \code{kt}.}
@@ -22,7 +22,7 @@ gte(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",approach="simplif
   \item{approach}{A character vector specifying the approach to use for the estimation to be applied among "simplified" or \code{"standardised"}. If approach is missing, \code{"simplified"} is considered by default.}
 %%     ~~Describe \code{x} here~~
 }
-\details{By default, this command calculates an estimate of the temporal mark variogram function \eqn{\gamma_[te](t)} for a spatio-temporal point pattern Stoyan et al. (2017).
+\details{By default, this command calculates an estimate of the temporal mark variogram function \eqn{\gamma_[te](t)} for a spatio-temporal point pattern.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
@@ -31,9 +31,7 @@ gte(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",approach="simplif
 \item{egte}{A vector containing the values of \eqn{\gamma_[te](v)} estimated.}
 \item{dt}{Parameter passed in argument. If \code{dt} is missing, a vector of temporal distances \code{v} at which \code{gte(v)} is computed from 0 to until quarter of the maximum distance between the times in the temporal pattern.}
 \item{kernel}{Parameters passed in argument. A vector of names and bandwidth of the spatial kernel.}
-\item{t.region}{If \code{t.region} is missing, the range of \code{xyt[,3]} is considered.}
-\item{t.lambda}{If \code{t.lambda} is missing, the estimate of the temporal mark correlation function is computed as for the homogeneous case, i.e. considering \eqn{n/|T|} as an estimate of the temporal intensity under the parameter \code{approach="standardised"}.}
-}
+\item{gtetheo}{Value under the Poisson case is calculated considering the side lengths of the bounding box of \code{xyt[,1:2]}.}}
 %% ...
 \references{
 %% ~put references to the literature/web site here ~
@@ -41,13 +39,12 @@ Baddeley, A., Rubak, E., Turner, R. (2015). Spatial Point Patterns: Methodology 
 
 Chiu, S. N., Stoyan, D., Kendall, W. S., and Mecke, J. (2013). Stochastic Geometry and its Applications. John Wiley & Sons.
 
-Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for plotting, simulating and analyzing Spatio-Temporal Point Patterns. Journal of Statistical Software, 53:1--29.
-
-Gonzalez, J. A., Rodriguez-Cortes, F. J., Cronie, O. and Mateu, J. (2016). Spatio-temporal point process statistics: a review. Spatial Statiscts. 18:505-544.
+Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for plotting, simulating and analyzing Spatio-Temporal Point Patterns. Journal of Statistical Software 53, 1-29.
 
 Illian, J B., Penttinen, A., Stoyan, H. and Stoyan, D. (2008). Statistical Analysis and Modelling of Spatial Point Patterns. John Wiley and Sons, London.
 
-Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark variograms for spatio-temporal point processes. Spatial Statistics, 20:125--147.
+Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark variograms for spatio-temporal
+point processes, Submitted .
 }
 \author{Francisco J. Rodriguez Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
 %%  ~~who you are~~
@@ -58,6 +55,10 @@ Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark var
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+Rodriguez-Cortes, F. J.(2015). \code{mvstpp}: Mark Variogram for Spatio-Temporal Point Processes. GitHub repository. URL \url{https://github.com/frajaroco/mvstpp}.
+}
 \examples{
 ## Not run:
 #################
@@ -69,16 +70,16 @@ hpp <- rpp(lambda = 100, replace = FALSE)$xyt
 plot(hpp)
 
 # This function provides an kernel estimator of the temporal mark variograma function
-out <- gte(hpp,ht=0.12/sqrt(100))
+out <- gte(hpp)
 
 # R plot - Temporal mark variogram function
 par(mfrow=c(1,1))
 xl <- c(0,0.25)
-yl <- c(0,max(out$egte,1/6))
+yl <- c(0,max(out$egte,out$gtetheo))
 plot(out$dt,out$egte,type="l",xlab="t = time",ylab=expression(gamma[te](t)),
                  xlim=xl,ylim=yl,col=1,cex.lab=1.5,cex.axis=1.5)
-lines(out$dt,rep(1/6,length(out$dt)),col=11)
-points(0,0,col=3,pch=13,cex=1.5)
+lines(out$dt,rep(out$gtetheo,length(out$dt)),col=11)
+
 ## End(Not run)
 
 }

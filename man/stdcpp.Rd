@@ -1,7 +1,7 @@
 \name{stdcpp}
 \alias{stdcpp}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Spatio-temporal double-cluster model
+\title{Spatio-temporal double cluster point process model
 %%  ~~function to do ... ~~
 }
 \description{Generate a random spatio-temporal point pattern, a simulated realisation of the cluster process.
@@ -52,13 +52,12 @@ Baddeley, A., Rubak, E., Turner, R. (2015). Spatial Point Patterns: Methodology 
 
 Chiu, S. N., Stoyan, D., Kendall, W. S., and Mecke, J. (2013). Stochastic Geometry and its Applications. John Wiley & Sons.
 
-Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for plotting, simulating and analyzing Spatio-Temporal Point Patterns. Journal of Statistical Software, 53:1--29.
-
-Gonzalez, J. A., Rodriguez-Cortes, F. J., Cronie, O. and Mateu, J. (2016). Spatio-temporal point process statistics: a review. Spatial Statiscts. 18:505-544.
+Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for plotting, simulating and analyzing Spatio-Temporal Point Patterns. Journal of Statistical Software 53, 1-29.
 
 Illian, J B., Penttinen, A., Stoyan, H. and Stoyan, D. (2008). Statistical Analysis and Modelling of Spatial Point Patterns. John Wiley and Sons, London.
 
-Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark variograms for spatio-temporal point processes. Spatial Statistics, 20:125--147.
+Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark variograms for spatio-temporal
+point processes, Submitted .
 }
 \author{Francisco J. Rodriguez Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
 %%  ~~who you are~~
@@ -69,19 +68,48 @@ Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark var
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+Rodriguez-Cortes, F. J.(2015). \code{mvstpp}: Mark Variogram for Spatio-Temporal Point Processes. GitHub repository. URL \url{https://github.com/frajaroco/mvstpp}.
+}
 \examples{
 ## Not run:
 #################
+require(plot3D)
 
 # Ellipsoid
 Xe <- stdcpp(lambp=20, a=0.12, b=0.09, c=0.07, mu=100)
 plot(Xe$xyt)
 
+# plot scatterplot3d
+par(mfrow=c(1,1))
+scatter3D(Xe$xyt[,1],Xe$xyt[,2],Xe$xyt[,3],theta=45,phi=30,
+main="Spatio-temporal point pattern",xlab="\n x",ylab="\n y",
+zlab="\n t",ticktype="detailed",col="black")
+
 # Balls
 Xb <- stdcpp(lambp=20, a=0.05, b=0.05, c=0.05, mu=100)
 plot(Xb$xyt)
-## End(Not run)
 
+# plot scatterplot3d
+par(mfrow=c(1,1))
+scatter3D(Xb$xyt[,1],Xb$xyt[,2],Xb$xyt[,3],theta=45,phi=30,
+main="Spatio-temporal point pattern",xlab="\n x",ylab="\n y",
+zlab="\n t",ticktype="detailed",col="black")
+
+# Northcumbria
+data(northcumbria)
+Northcumbria <- northcumbria/1000
+X <- stdcpp(lambp=0.00004, a=10,b=10,c=10, mu=120, s.region=Northcumbria, t.region=c(0,200))
+plot(X$xyt,s.region=Northcumbria)
+
+# plot scatterplot3d
+par(mfrow=c(1,1))
+scatter3D(X$xyt[,1],X$xyt[,2],X$xyt[,3],theta=-45,phi=30,
+main="Spatio-temporal point pattern",xlab="\n x",ylab="\n y",
+zlab="\n t",ticktype="detailed",col="black")
+
+## End(Not run)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
