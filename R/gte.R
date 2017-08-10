@@ -81,7 +81,7 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
   
   if (appro2[1]==1){
     gteout <- .Fortran("gtecore",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),as.double(dt),
-                        as.integer(ndt),as.integer(ker2),as.double(ht),(gtet),PACKAGE="msfstpp")
+                        as.integer(ndt),as.integer(ker2),as.double(ht),(gtet))
     gtet <- gteout[[9]]
     
     dtf <- rep(0,ndt+2)
@@ -143,8 +143,7 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
     gteout <- .Fortran("gtecoreinh",as.double(ptsx),as.double(ptsy),as.double(ptst),as.integer(npt),
                         as.double(dt),as.integer(ndt),as.double(t.lambda),as.integer(ker2),
                         as.double(ht),as.double(wrt),as.double(wtt),as.double(wbit),
-                        as.double(wbimodt),as.double(wst),as.integer(correc2),(gtet),
-                        PACKAGE="msfstpp")
+                        as.double(wbimodt),as.double(wst),as.integer(correc2),(gtet))
     
     gtet <- gteout[[16]]
     

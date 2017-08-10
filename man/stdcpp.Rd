@@ -56,8 +56,7 @@ Gabriel, E., Rowlingson, B., Diggle P J. (2013) \code{stpp}: an R package for pl
 
 Illian, J B., Penttinen, A., Stoyan, H. and Stoyan, D. (2008). Statistical Analysis and Modelling of Spatial Point Patterns. John Wiley and Sons, London.
 
-Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J. and Wilfried, G. (2016). Mark variograms for spatio-temporal
-point processes, Submitted .
+Stoyan, D., Rodriguez-Cortes, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. Spatial Statistics. 20, 125-147.
 }
 \author{Francisco J. Rodriguez Cortes <cortesf@uji.es> \url{https://fjrodriguezcortes.wordpress.com}
 %%  ~~who you are~~
@@ -68,10 +67,6 @@ point processes, Submitted .
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-Rodriguez-Cortes, F. J.(2015). \code{mvstpp}: Mark Variogram for Spatio-Temporal Point Processes. GitHub repository. URL \url{https://github.com/frajaroco/mvstpp}.
-}
 \examples{
 ## Not run:
 #################
