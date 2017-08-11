@@ -13,7 +13,13 @@ and thereafter run the commands:
 require(devtools)
 install_github('frajaroco/mvstpp')
 ```
-**warning:** If you have problems to load the repository. It is recommended to load the package `geoR` before load the `msftpp` repository.
+
+**warning:** If you have problems to load the repository. It is recommended to load the package `geoR` before load the `msftpp` repository. Also, it is necessary to load additional packages as `plot3D`.
+```
+require(geoR)
+require(plot3D)
+library(mvstpp)
+```
 
 ## References
 - [Stoyan, D., Rodríguez-Cortés, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. *Spatial Statistics*, **20**:125-147.](http://www.sciencedirect.com/science/article/pii/S2211675317300696)
