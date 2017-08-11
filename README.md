@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # mvstpp: Mark variograms for spatio-temporal point processes 
 
 Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through spatial and temporal mark variograms. This repository is based on `spatstat`, `splancs`, `stpp`, `geoR` and `KernSmooth` packages.
