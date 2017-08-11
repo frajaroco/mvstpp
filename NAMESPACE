@@ -1,10 +1,10 @@
 useDynLib(mvstpp)
 exportPattern("^[[:alpha:]]+")
 
-import(geoR)
 import(splancs)
 import(spatstat)
 import(KernSmooth)
 import(stpp)
 
 importFrom("stats", "dist", "rpois", "runif")
+importFrom("geoR","variog","variofit")
