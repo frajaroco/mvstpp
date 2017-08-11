@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # mvstpp: Mark variograms for spatio-temporal point processes 
 
 Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through spatial and temporal mark variograms. This repository is based on `spatstat`, `splancs`, `stpp`, `geoR` and `KernSmooth` packages.
@@ -13,7 +18,7 @@ and thereafter run the commands:
 require(devtools)
 install_github('frajaroco/mvstpp')
 ```
-**warning:** If you have problems to load the repository and work under Microsoft Windows. It is recommended load the package `geoR` before to load the `msftpp` repository.
+**warning:** If you have problems to load the repository. It is recommended to load the package `geoR` before load the `msftpp` repository.
 
 ## References
 - [Stoyan, D., Rodríguez-Cortés, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. *Spatial Statistics*, **20**:125-147.](http://www.sciencedirect.com/science/article/pii/S2211675317300696)
