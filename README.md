@@ -4,7 +4,7 @@ Basic toolkit for the exploration and analysis of the spatio-temporal point patt
 
 ## Installation guide
 
-The easiest way to install the development version of `mvstpp` from GitHub is using the devtools package which can be installed run the next command:
+The easiest way to install the development version of `mvstpp` from GitHub is using the `remotes` **R** package which can be installed run the next command:
 ```
 install.packages('remotes')
 ```
@@ -13,7 +13,7 @@ and thereafter run the commands:
 require(remotes)
 install_github('frajaroco/mvstpp')
 ```
-**warning:** If you have problems to load the repository. It is  is necessary to load the additional **R** package `plot3D` in order to plot the outputs of some functions.
+**warning:** It is  is necessary to load the additional **R** package `plot3D` in order to plot the outputs of some functions.
 
 ## References
 - [Stoyan, D., Rodríguez-Cortés, F. J., Mateu, J., and Gille, W. (2017). Mark variograms for spatio-temporal point processes. *Spatial Statistics*, **20**:125-147.](http://www.sciencedirect.com/science/article/pii/S2211675317300696)
