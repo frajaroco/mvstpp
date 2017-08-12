@@ -100,7 +100,7 @@ plot(X$xyt,s.region=Northcumbria)
 
 # plot scatterplot3d
 par(mfrow=c(1,1))
-scatter3D(X$xyt[,1],X$xyt[,2],X$xyt[,3],theta=-45,phi=30,
+scatter3D(X$xyt[,1],X$xyt[,2],X$xyt[,3],theta=45,phi=30,
 main="Spatio-temporal point pattern",xlab="\n x",ylab="\n y",
 zlab="\n t",ticktype="detailed",col="black")
 
