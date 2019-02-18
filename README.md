@@ -4,13 +4,13 @@ Basic toolkit for the exploration and analysis of the spatio-temporal point patt
 
 ## Installation guide
 
-The easiest way to install the development version of `mvstpp` from GitHub is using the `remotes` package which can be installed run the next command:
+The easiest way to install the development version of `mvstpp` from GitHub is using the `devtools` package which can be installed run the next command:
 ```
-install.packages('remotes')
+install.packages('devtools')
 ```
 and thereafter run the commands:
 ```
-require(remotes)
+require(devtools)
 install_github('frajaroco/mvstpp')
 ```
 **warning:** It is  is necessary to load the additional **R** package `plot3D` in order to plot the outputs of some functions.
