@@ -17,4 +17,4 @@ Description: Basic toolkit for the exploration and analysis of the spatio-tempor
 License: GPL-3
 LazyLoad: yes
 NeedsCompilation: yes
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
