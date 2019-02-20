@@ -1,20 +1,24 @@
 Package: mvstpp
-Type: Package
 Title: Mark variogram for spatio-temporal point processes
 Version: 0.1.4
-Nickname: Coffee Aroma
-Date: 2017-08-10
+Date: 2019-02-10
 Author: Francisco J. Rodriguez-Cortes
 Maintainer: Francisco J. Rodriguez-Cortes <cortesf@uji.es>
 Depends:
-    R (>= 3.4.0),
+    R (>= 3.0),
+    grDevices,
+    graphics,
     spatstat,
     splancs,
     stpp,
     geoR,
-    KernSmooth,
+Imports: KernSmooth 
+Suggests: knitr(>= 1.11), rmarkdown(>= 0.8.1)
 Description: Basic toolkit for the exploration and analysis of the spatio-temporal point patterns through spatial and temporal mark variograms.
 License: GPL-3
+Encoding: UTF-8
 LazyLoad: yes
-NeedsCompilation: yes
+NeedsCompilation: no
 RoxygenNote: 6.1.1
+BuildVignettes: True
+VignetteBuilder: knitr

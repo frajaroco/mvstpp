@@ -1,10 +1,14 @@
-useDynLib(mvstpp)
-exportPattern("^[[:alpha:]]+")
+useDynLib(mvstpp, .registration=TRUE)
+
+export("FMvariogram")
+export("gsp")
+export("gte")
+export("stdccpp")
+export("sthpcpp")
 
 import(splancs)
 import(spatstat)
-import(KernSmooth)
 import(stpp)
+import(geoR)
 
-importFrom("stats", "dist", "rpois", "runif")
-importFrom("geoR","variog","variofit")
+importFrom("KernSmooth","dpik")
