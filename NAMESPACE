@@ -11,4 +11,6 @@ import(spatstat)
 import(stpp)
 import(geoR)
 
+importFrom("grDevices","chull","colorRampPalette","dev.list","dev.new","dev.off","gray","grey","heat.colors","rgb")
+
 importFrom("KernSmooth","dpik")
