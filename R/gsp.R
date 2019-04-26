@@ -32,9 +32,9 @@ gsp <- function(xyt,s.region,s.lambda,ds,ks="epanech",hs,correction="none",appro
   ker2 <- rep(0,3)
   ker2[ik] <- 1
   
-  dup <- duplicated(data.frame(xyt[,1],xyt[,2],xyt[,3]),fromLast = TRUE)[1]
+  dup <- any(duplicated(data.frame(xyt[,1], xyt[,2], xyt[,3])))
   if (dup == TRUE){
-    messnbd <- paste("spatio-temporal data contain duplicated points")
+    messnbd <- paste("spatio-temporal data contains duplicated points")
     warning(messnbd,call.=FALSE)
   }
   
