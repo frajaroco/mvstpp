@@ -3,7 +3,7 @@ useDynLib(mvstpp, .registration=TRUE)
 export("FMvariogram")
 export("gsp")
 export("gte")
-export("stdccpp")
+export("stdcpp")
 export("sthpcpp")
 
 import(splancs)
