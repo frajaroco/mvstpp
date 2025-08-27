@@ -66,7 +66,7 @@ gte <- function(xyt,t.region,t.lambda,dt,kt="epanech",ht,correction="none",appro
   }
   
   kernel <- c(kt=kt,ht=ht)
-  gtetheo <- ((a^2)+(b^2))/12
+  gtetheo <- (((a^2)+(b^2))/3)-(sqrt(((a^2)+(b^2))/3)+((a^2)/6*b)*log((sqrt((a^2)+(b^2))+b)/a)+((b^2)/6a)*log((sqrt((a^2)+(b^2))+a)/b)-((((a^2)+(b^2))^(3/2))/(3*a*b))*((pi/2)-asin(a/sqrt((a^2)+(b^2)))-asin(b/sqrt((a^2)+(b^2)))))
   
   pts <- xyt.inside[,1:2]
   xytimes <- xyt.inside[,3]
